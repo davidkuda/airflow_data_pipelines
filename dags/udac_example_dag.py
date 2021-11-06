@@ -11,8 +11,8 @@ from operators.load_dimension import LoadDimensionOperator
 from operators.data_quality import DataQualityOperator
 from helpers import SqlQueries
 
-# AWS_KEY = os.environ.get('AWS_KEY')
-# AWS_SECRET = os.environ.get('AWS_SECRET')
+AWS_KEY = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET = os.environ.get('AWS_SECRET_ACCESS_KEY_ID')
 
 default_args = {
     'owner': 'udacity',
