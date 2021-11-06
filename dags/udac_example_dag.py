@@ -24,10 +24,11 @@ default_args = {
     'email_on_retry': False,
 }
 
-dag = DAG('udac_example_dag',
+dag = DAG('sparkify etl',
           default_args=default_args,
           description='Load and transform data in Redshift with Airflow',
-          schedule_interval='0 * * * *'
+          schedule_interval='0 * * * *',
+          catchup=False
         )
 
 start_operator = DummyOperator(task_id='Begin_execution',  dag=dag)
