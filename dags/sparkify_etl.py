@@ -35,11 +35,15 @@ with DAG(
     start_operator = DummyOperator(task_id='Begin_execution',  dag=dag)
 
     stage_events_to_redshift = StageToRedshiftOperator(
-        task_id='Stage_events'
+        task_id='stage_events',
+        table_name='public.staging_events',
+        s3_prefix='log-data'
     )
 
     stage_songs_to_redshift = StageToRedshiftOperator(
-        task_id='Stage_songs'
+        task_id='stage_songs',
+        table_name='public.staging_songs',
+        s3_prefix='song-data'        
     )
 
     load_songplays_table = LoadFactOperator(
