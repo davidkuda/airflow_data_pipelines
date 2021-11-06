@@ -25,7 +25,7 @@ default_args = {
 }
 
 with DAG(
-    'sparkify etl',
+    'sparkify_etl',
     default_args=default_args,
     description='Load and transform data in Redshift with Airflow',
     schedule_interval='0 * * * *',
