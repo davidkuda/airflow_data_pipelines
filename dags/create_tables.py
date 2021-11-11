@@ -8,8 +8,6 @@ default_args = {
     'owner': 'udacity',
     'start_date': datetime(2021, 9, 1),
     'depends_on_past': False,
-    'retries': 3,
-    'retry_delay': timedelta(minutes=5),
     'email_on_failure': False,
     'email_on_retry': False,
 }
