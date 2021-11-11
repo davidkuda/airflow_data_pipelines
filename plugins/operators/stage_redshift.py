@@ -30,7 +30,7 @@ class StageToRedshiftOperator(BaseOperator):
 
         copy_staging_table_query = f"""
         COPY {self.table_name}
-        FROM s3://{self.s3_bucket}/{self.s3_prefix}
+        FROM 's3://{self.s3_bucket}/{self.s3_prefix}'
         CREDENTIALS 'aws_iam_role={self.dwh_role_arn}'
         REGION 'us-west-2'
         JSON 'auto ignorecase';
