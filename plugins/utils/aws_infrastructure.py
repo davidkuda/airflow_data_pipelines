@@ -9,17 +9,34 @@ import pandas as pd
 from utilities import get_aws_creds, parse_config_file
 
 
+
 def main():
+    aws = create_aws_session()
+    aws.create_infrastructure()
+    # aws.destroy_infrastructure()
+    # p = aws.get_redshift_cluster_props()
+    # print(aws.get_redshift_props_as_pd_df(p))
+    # print(aws.get_iam_role_arn())
+
+
+def create_infrastructure():
+    aws = create_aws_session()
+    aws.create_infrastructure()
+
+
+def destroy_infrastructure():
+    aws = create_aws_session()
+    aws.destroy_infrastructure()
+    
+
+def create_aws_session():
     aws_creds = get_aws_creds()
     aws = AWS(
         aws_access_key_id=aws_creds['aws_access_key_id'],
         aws_secret_access_key=aws_creds['aws_secret_access_key'],
-        region='us-east-1',
-        config_params=parse_config_file()
-    )
-    
-    aws.create_infrastructure()
-    # aws.destroy_infrastructure()
+        region='us-west-2',
+        config_params=parse_config_file())
+    return aws
 
 
 class AWS:
@@ -49,7 +66,7 @@ class AWS:
         self.check_existence_of_redshift_cluster()
 
         # After cluster is available: Open tcp port.
-        # aws.open_tcp_port()
+        self.open_tcp_port()
 
         print('Infrastructure created. AWS Redshift is available.')
 
@@ -58,6 +75,7 @@ class AWS:
         print('iam role arn: ', self.get_iam_role_arn())
 
     def destroy_infrastructure(self):
+        print('Destroying Infrastructure')
         self.redshift.delete_cluster(
             ClusterIdentifier=self.configs['DWH_CLUSTER_IDENTIFIER'],
             SkipFinalClusterSnapshot=True)
