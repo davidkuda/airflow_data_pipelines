@@ -13,7 +13,7 @@ def get_aws_creds():
     return aws_creds
 
 
-def parse_config_file(config_file: str = 'utils/dwh.cfg') -> dict:
+def parse_config_file(config_file: str = 'plugins/utils/dwh.cfg') -> dict:
     config = ConfigParser()
     config.read_file(open(config_file))
     sections = config.sections()
