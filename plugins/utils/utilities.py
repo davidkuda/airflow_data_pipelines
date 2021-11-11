@@ -2,12 +2,12 @@ import os
 from configparser import ConfigParser
 
 
-def get_aws_creds():
+def get_aws_creds(profile: str = 'udacity'):
     home_dir = os.environ.get('HOME')
     config = ConfigParser()
     config.read(f'{home_dir}/.aws/credentials')
-    aws_access_key_id = config['udacity']['aws_access_key_id']
-    aws_secret_access_key = config['udacity']['aws_secret_access_key']
+    aws_access_key_id = config[profile]['aws_access_key_id']
+    aws_secret_access_key = config[profile]['aws_secret_access_key']
     aws_creds = { "aws_access_key_id": aws_access_key_id,
                   "aws_secret_access_key": aws_secret_access_key }
     return aws_creds
