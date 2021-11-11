@@ -5,6 +5,7 @@ from airflow.operators.python import PythonOperator
 from airflow.models.variable import Variable
 
 from utils.aws_infrastructure import AWS
+from utils.utilities import parse_config_file
 
 
 default_args = {
@@ -19,7 +20,8 @@ def create_aws_connection():
     return AWS(
         aws_access_key_id=Variable.get('AWS_ACCESS_KEY_ID'),
         aws_secret_access_key=Variable.get('AWS_SECRET_ACCESS_KEY'),
-        region='us-west-2'
+        region='us-west-2',
+        config_params=parse_config_file
     )
 
 
