@@ -3,6 +3,7 @@ from airflow.models.baseoperator import BaseOperator
 from airflow.utils.decorators import apply_defaults
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
+from airflow.models.variable import Variable
 
 
 class StageToRedshiftOperator(BaseOperator):
@@ -13,7 +14,7 @@ class StageToRedshiftOperator(BaseOperator):
                  table_name: str,
                  s3_prefix: str,
                  s3_bucket: str = 'udacity-dend',
-                 dwh_role_arn: str = 'arn:aws:iam::787511476638:role/dwhRole',
+                 dwh_role_arn: str = Variable.get('DWH_ROLE_ARN'),
                  *args, **kwargs):
         super(StageToRedshiftOperator, self).__init__(*args, **kwargs)
         self.table_name = table_name
@@ -21,13 +22,8 @@ class StageToRedshiftOperator(BaseOperator):
         self.s3_prefix = s3_prefix
         self.dwh_role_arn = dwh_role_arn
 
+
     def execute(self, context):
-        self.log.info('StageToRedshiftOperator not implemented yet')
-
-        redshift_hook = PostgresHook('redshift')
-        conn = redshift_hook.get_conn()
-        cur = conn.cursor()
-
         copy_staging_table_query = f"""
         COPY {self.table_name}
         FROM 's3://{self.s3_bucket}/{self.s3_prefix}'
@@ -36,5 +32,9 @@ class StageToRedshiftOperator(BaseOperator):
         JSON 'auto ignorecase';
         """
 
-        self.log.info(f'Copying "{self.table_name}" to redshift')
+        redshift_hook = PostgresHook('redshift')
+        conn = redshift_hook.get_conn()
+        cur = conn.cursor()
+        self.log.info(f'Copying data to the redshift table "{self.table_name}"')
         cur.execute(copy_staging_table_query)
+        conn.commit()
