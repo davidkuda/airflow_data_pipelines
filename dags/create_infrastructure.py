@@ -35,6 +35,13 @@ def set_redshift_endpoint_as_var():
     print(f'Set the variable REDSHIFT_URL to "{redshift_url}"')
 
 
+def set_iam_role_arn_as_var():
+    aws = create_aws_connection()
+    iam_role_arn = aws.get_iam_role_arn()
+    Variable.set(key='DWH_ROLE_ARN', value=iam_role_arn)
+    print(f'Set the variable DWH_ROLE_ARN to "{iam_role_arn}"')
+
+
 with DAG(
     'create_infrastructure',
     default_args=default_args,
@@ -48,8 +55,13 @@ with DAG(
     )
     
     set_var_redshift_url = PythonOperator(
-        task_id='set_redshift_url',
+        task_id='set_var_redshift_url',
         python_callable=set_redshift_endpoint_as_var
     )
 
-    create_aws_infrastructure >> set_var_redshift_url
+    set_var_dwh_role_arn = PythonOperator(
+        task_id='set_var_dwh_role_arn',
+        python_callable=set_iam_role_arn_as_var
+    )
+
+    create_aws_infrastructure >> [set_var_redshift_url, set_var_dwh_role_arn]
