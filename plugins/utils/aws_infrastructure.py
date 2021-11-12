@@ -4,6 +4,7 @@ import datetime
 import os
 
 import boto3
+from botocore.exceptions import ClientError
 import pandas as pd
 
 from .utilities import get_aws_creds, get_aws_creds_from_airflow, parse_config_file
