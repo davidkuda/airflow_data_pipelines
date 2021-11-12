@@ -6,8 +6,7 @@ import os
 import boto3
 import pandas as pd
 
-from utilities import get_aws_creds, parse_config_file
-
+from .utilities import get_aws_creds, get_aws_creds_from_airflow, parse_config_file
 
 
 def main():
