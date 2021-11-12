@@ -105,15 +105,20 @@ class AWS:
             'Version': '2012-10-17'
         }
 
-        self.iam.create_role(
-            Path='/',
-            RoleName=self.configs.get('DWH_IAM_ROLE_NAME'),
-            Description='Allows Redshift clusters to call AWS services on your behalf.',
-            AssumeRolePolicyDocument=json.dumps(role_policy))
+        try:
+            self.iam.create_role(
+                Path='/',
+                RoleName=self.configs.get('DWH_IAM_ROLE_NAME'),
+                Description='Allows Redshift clusters to call AWS services on your behalf.',
+                AssumeRolePolicyDocument=json.dumps(role_policy))
 
-        self.iam.attach_role_policy(
-            RoleName=self.configs.get('DWH_IAM_ROLE_NAME'),
-            PolicyArn='arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess')
+            self.iam.attach_role_policy(
+                RoleName=self.configs.get('DWH_IAM_ROLE_NAME'),
+                PolicyArn='arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess')
+
+        except ClientError as error:
+            if error.response['Error']['Code'] == 'EntityAlreadyExists':
+                print('EntityAlreadyExists!')
 
     def get_iam_role_arn(self):
         role_arn = self.iam.get_role(
