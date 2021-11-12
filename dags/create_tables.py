@@ -15,7 +15,7 @@ default_args = {
 with DAG(
     'create_tables',
     default_args=default_args,
-    description='Load and transform data in Redshift with Airflow',
+    description='Create the tables in Redshift',
     schedule_interval='0 * * * *',
     catchup=False
 ) as dag:
