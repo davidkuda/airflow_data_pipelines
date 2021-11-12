@@ -53,6 +53,13 @@ class AWS:
         self.configs = config_params
 
     def create_infrastructure(self):
+        # Check if cluster exists already:
+        try:
+            self.get_dwh_endpoint()
+            return
+        except Exception:
+            pass
+        
         # Create iam role
         self.create_iam_role()
 
