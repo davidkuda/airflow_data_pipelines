@@ -2,8 +2,6 @@ from datetime import datetime, timedelta
 import os
 from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
-# from airflow.operators import (StageToRedshiftOperator, LoadFactOperator,
-                                # LoadDimensionOperator, DataQualityOperator)
 
 from operators.stage_redshift import StageToRedshiftOperator
 from operators.load_fact import LoadFactOperator
