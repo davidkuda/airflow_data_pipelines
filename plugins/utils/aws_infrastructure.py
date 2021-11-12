@@ -165,6 +165,14 @@ class AWS:
             redshift_cluster_props = self.get_redshift_cluster_props()
             if redshift_cluster_props["ClusterStatus"] == 'available':
                 print('Created! Cluster is now available.')
+    
+    def wait_for_redshift_cluster_available(self):
+        waiter = self.redshift.get_waiter('cluster_available')
+        waiter.wait()
+    
+    def wait_for_redshift_cluster_deleted(self):
+        waiter = self.redshift.get_waiter('cluster_deleted')
+        waiter.wait()      
 
     def get_dwh_endpoint(self):
         dwh_endpoint = self.get_redshift_cluster_props()['Endpoint']['Address']
