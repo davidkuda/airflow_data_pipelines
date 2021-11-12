@@ -70,7 +70,8 @@ class AWS:
         self.create_redshift_cluster(read_s3_role_arn)
 
         # Check for availability
-        self.check_existence_of_redshift_cluster()
+        self.wait_for_creation_of_redshift_cluster()
+        # self.wait_for_redshift()
 
         # After cluster is available: Open tcp port.
         self.open_tcp_port()
@@ -148,7 +149,7 @@ class AWS:
         df = self.get_redshift_props_as_pd_df(redshift_cluster_props)
         print(df)
 
-    def check_existence_of_redshift_cluster(self):
+    def wait_for_creation_of_redshift_cluster(self):
         t0 = datetime.datetime.now()
         redshift_cluster_props = self.get_redshift_cluster_props()
         while redshift_cluster_props["ClusterStatus"] == 'creating':
