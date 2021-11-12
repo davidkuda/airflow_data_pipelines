@@ -38,3 +38,4 @@ class StageToRedshiftOperator(BaseOperator):
         self.log.info(f'Copying data to the redshift table "{self.table_name}"')
         cur.execute(copy_staging_table_query)
         conn.commit()
+        self.log.info(f'Success; Committing transaction.')
