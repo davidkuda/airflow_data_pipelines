@@ -13,8 +13,8 @@
 You can use docker-compose to spin up airflow. Follow the instructions on airflow docs: https://airflow.apache.org/docs/apache-airflow/stable/start/docker.html
 
 ```bash
-git clone 
-cd 
+git clone git@github.com:davidkuda/airflow_data_pipelines.git
+cd airflow_data_pipelines
 docker-compose up airflow-init
 docker-compose up
 ```
