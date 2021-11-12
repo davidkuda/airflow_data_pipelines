@@ -195,12 +195,15 @@ class AWS:
         cluster_props = self.get_redshift_cluster_props()
         vpc = self.ec2.Vpc(id=cluster_props['VpcId'])
         default_security_group = list(vpc.security_groups.all())[0]
-        default_security_group.authorize_ingress(
-            GroupName=default_security_group.group_name,
-            CidrIp='0.0.0.0/0',
-            IpProtocol='TCP',
-            FromPort=int(self.configs.get('DWH_PORT')),
-            ToPort=int(self.configs.get('DWH_PORT')))
+        try:
+            default_security_group.authorize_ingress(
+                GroupName=default_security_group.group_name,
+                CidrIp='0.0.0.0/0',
+                IpProtocol='TCP',
+                FromPort=int(self.configs.get('DWH_PORT')),
+                ToPort=int(self.configs.get('DWH_PORT')))
+        except ClientError:
+            print('open_tcp_port(): Connection already exists. Skipping.')
 
     def delete_cluster(self):
         self.redshift.delete_cluster(
