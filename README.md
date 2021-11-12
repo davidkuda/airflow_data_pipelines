@@ -43,12 +43,11 @@ You will find 5 dags:
 
 ### Introduction: Sparkify Audio Streaming, User Data and AWS.
 
-Sparkify is a (fictional) startup that offers music streaming services. They accumulate 
-data but do not yet leverage them. In this project I build an
-ETL pipeline that loads data from S3 to Redshift. A walk through a concept in [a jupyter notebook.](./notebooks/Sample_Loads.ipynb) 
+Sparkify is a (fictional) startup that offers music streaming services. They accumulate data but do not yet leverage them. 
 
-In order to perform the ETL process, I connect to the S3 bucket using Python and boto3. I then copy all json files that are stored in that bucket to AWS Redshift.
-The data first lands to a staging table. From there the ETL processes transform the data by using SQL to SQL design in Redshift. 
+In this project I build an ETL pipeline that loads data from S3 to Redshift. The pipeline is executed with airflow.
+
+In order to perform the ETL process, I connect to the S3 bucket using Python and boto3. I then copy all json files that are stored in that bucket to AWS Redshift.The data first lands to a staging table. From there the ETL processes transform the data by using SQL to SQL design in Redshift. 
 
 With the data model and the Sparkify will have the ability to perform several analyses.
 For instance, Sparkify will gain the ability to understand which songs are being played
