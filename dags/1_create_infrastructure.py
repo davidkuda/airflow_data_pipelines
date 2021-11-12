@@ -45,7 +45,7 @@ def set_iam_role_arn_as_var():
 
 
 with DAG(
-    'create_infrastructure',
+    '1_create_infrastructure',
     default_args=default_args,
     description='Create a redshift cluster on AWS',
     schedule_interval='0 * * * *',

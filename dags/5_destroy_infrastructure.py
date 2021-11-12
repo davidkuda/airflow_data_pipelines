@@ -31,9 +31,9 @@ def destroy_infrastructure():
 
 
 with DAG(
-    'destroy_infrastructure',
+    '5_destroy_infrastructure',
     default_args=default_args,
-    description='Create a redshift cluster on AWS',
+    description='Destroy infrastructure on AWS',
     schedule_interval='0 * * * *',
     catchup=False
 ) as dag:

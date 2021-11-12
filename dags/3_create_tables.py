@@ -13,7 +13,7 @@ default_args = {
 }
 
 with DAG(
-    'create_tables',
+    '3_create_tables',
     default_args=default_args,
     description='Create the tables in Redshift',
     schedule_interval='0 * * * *',
