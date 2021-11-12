@@ -23,8 +23,8 @@ default_args = {
 
 with DAG(
     'airflow_cli',
+    description='Create Connections to AWS and Redshift',
     default_args=default_args,
-    description='Create a redshift cluster on AWS',
     schedule_interval='0 * * * *',
     catchup=False
 ) as dag:
