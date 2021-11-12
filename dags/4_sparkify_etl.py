@@ -74,9 +74,20 @@ with DAG(
         sql_query=SqlQueries.time_table_insert
     )
 
-    # run_quality_checks = DataQualityOperator(
-        # task_id='Run_data_quality_checks'
-    # )
+    table_names = [
+        'public.artists',
+        'public.songplays',
+        'public.songs',
+        'public.staging_events',
+        'public.staging_songs',
+        'public.time',
+        'public.users'
+    ]
+
+    run_quality_checks = DataQualityOperator(
+        table_names=table_names,
+        task_id='Run_data_quality_checks'
+    )
 
     end_operator = DummyOperator(task_id='Stop_execution')
 
@@ -86,6 +97,5 @@ with DAG(
             load_time_dimension_table,
             load_user_dimension_table,
             load_artist_dimension_table] \
-            >> end_operator
-        # >> run_quality_checks \
-        # >> end_operator
+        >> run_quality_checks \
+        >> end_operator
