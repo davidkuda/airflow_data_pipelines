@@ -21,7 +21,7 @@ def create_aws_connection():
         aws_access_key_id=Variable.get('AWS_ACCESS_KEY_ID'),
         aws_secret_access_key=Variable.get('AWS_SECRET_ACCESS_KEY'),
         region='us-west-2',
-        config_params=parse_config_file
+        config_params=parse_config_file()
     )
 
 
