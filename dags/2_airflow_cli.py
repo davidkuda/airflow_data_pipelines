@@ -38,13 +38,13 @@ with DAG(
         bash_command=f'echo {AWS_ACCESS_KEY_ID}'
     )
     
-    delete_aws_conn = BashOperator(
-        task_id='delete_aws_conn',
-        bash_command='airflow connections delete aws_credentials'
-    )
+    # delete_aws_conn = BashOperator(
+    #     task_id='delete_aws_conn',
+    #     bash_command='airflow connections delete aws_credentials'
+    # )
     
     add_aws_conn = BashOperator(
-        task_id='connect_aws',
+        task_id='add_aws_connection',
         bash_command=f'''
         airflow connections add 'aws_credentials' \
             --conn-type 'Amazon Web Services' \
@@ -53,13 +53,13 @@ with DAG(
         '''
     )
 
-    delete_redshift_conn = BashOperator(
-        task_id='delete_redshift_conn',
-        bash_command='airflow connections delete redshift'
-    )
+    # delete_redshift_conn = BashOperator(
+    #     task_id='delete_redshift_conn',
+    #     bash_command='airflow connections delete redshift'
+    # )
     
     add_redshift_conn = BashOperator(
-        task_id='connect_redshift',
+        task_id='add_redshift_connection',
         bash_command=f"""
         airflow connections add 'redshift' \
             --conn-type 'Postgres' \
@@ -72,5 +72,5 @@ with DAG(
     )
     
     
-    delete_aws_conn >> add_aws_conn
-    delete_redshift_conn >> add_redshift_conn
+    # delete_aws_conn >> add_aws_conn
+    # delete_redshift_conn >> add_redshift_conn
