@@ -29,8 +29,10 @@ def destroy_infrastructure():
     aws.destroy_infrastructure()
     
 
-def create_aws_session():
-    aws_creds = get_aws_creds()
+def create_aws_session(aws_creds: dict = None):
+    if aws_creds is None:
+        aws_creds = get_aws_creds()
+
     aws = AWS(
         aws_access_key_id=aws_creds['aws_access_key_id'],
         aws_secret_access_key=aws_creds['aws_secret_access_key'],
