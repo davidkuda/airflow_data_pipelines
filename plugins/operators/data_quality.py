@@ -29,4 +29,5 @@ class DataQualityOperator(BaseOperator):
                 num_records is None
                 and num_records < 1
             ):
-                self.log.warn(f'No records in the table "{table_name}"!')
+                self.log.error(f'No records in the table "{table_name}"!')
+                raise ValueError(f'No records in the table "{table_name}"!')
